@@ -9,19 +9,19 @@
 #include <iostream>
 class Computer
 {
-    protected:
-        std::string name;
-        std::string software;
-        std::string box;
-        void set_components();
-        void assemble_components();
-        void install_software();
-        void configure_software();
-        void package_product();
-        void create_device();
-        Computer(std::string n,std::string s);
-    public:
-        ~Computer();
+protected:
+    std::string name;
+    std::string software;
+    std::string box;
+    void set_components();
+    void assemble_components();
+    void install_software();
+    void configure_software();
+    void package_product();
+    void create_device();
+    Computer(std::string n,std::string s);
+public:
+    ~Computer();
 };
 
 Computer::Computer(std::string name,std::string software)
@@ -68,25 +68,23 @@ void Computer::create_device()
 // MARK: SubClases
 class Laptop:  public Computer
 {
-    public:
-        Laptop() :Computer("Laptop","Mac OS X"){}
+public:
+    Laptop() :Computer("Laptop","Mac OS X"){}
 };
 
 class Netbook: public Computer
 {
-    public:
-        Netbook():Computer("Netbook","Lubuntu 14"){}
+public:
+    Netbook():Computer("Netbook","Lubuntu 14"){}
 };
 
 class Desktop: public Computer
 {
-    public:
-        Desktop():Computer("Desktop","Windows 10"){}
+public:
+    Desktop():Computer("Desktop","Windows 10"){}
 };
-class Server:public Computer
+class Tablet:public Computer
 {
-    public:
-        Server() :Computer("Server","Fedora 24"){}
+public:
+    Tablet() :Computer("Tablet","Android 6.0"){}
 };
-
-

@@ -7,13 +7,16 @@
 //
 
 #include "Computer.h"
+#include "Generator.h"
 #include <iostream>
+
 
 int main(int argc, const char * argv[])
 {
-    Computer *test = new Laptop(); delete test;
-    test = new Netbook();          delete test;
-    test = new Desktop();          delete test;
-    test = new Server();           delete test;
+    Generator factory;
+    Computer *test = factory.generate("laptop");  delete test;
+    test = factory.generate("tablet");            delete test;
+    test = factory.generate("desktop");           delete test;
+    test = factory.generate("netbook");           delete test;
     return 0;
 }
