@@ -6,17 +6,16 @@
 //  Copyright © 2016 Cuadra. All rights reserved.
 //
 
-#include "Computer.h"
-#include "Generator.h"
 #include <iostream>
-
+#include "Factory.h"
 
 int main(int argc, const char * argv[])
 {
-    Generator factory;
-    Computer *test = factory.generate("laptop");  delete test;
-    test = factory.generate("tablet");            delete test;
-    test = factory.generate("desktop");           delete test;
-    test = factory.generate("netbook");           delete test;
+    ConcreteFactory *f = ConcreteFactory::GetInstance();
+    Product *p = f->createProduct(1);
+    f->createProduct(2);
+    f->createProduct(3);
+    f->createProduct(4);
+    f->createProduct(5);
     return 0;
 }
