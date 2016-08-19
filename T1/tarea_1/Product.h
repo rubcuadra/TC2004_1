@@ -54,7 +54,7 @@ class Laptop : public Clon<Product,Laptop>
     friend class ConcreteFactory;
     private: Laptop(){};
 };
-class Netbook : public Clon<Product,Laptop>
+class Netbook : public Clon<Product,Netbook>
 {
     void set_components()
     {std::cout<<"Buscando componentes para una NETBOOK\n";}
@@ -69,7 +69,7 @@ class Netbook : public Clon<Product,Laptop>
     friend class ConcreteFactory;
     private: Netbook(){};
 };
-class Tablet :public Clon<Product,Laptop>
+class Tablet :public Clon<Product,Tablet>
 {
     void set_components()
     {std::cout<<"Buscando componentes para una TABLET\n";}
@@ -84,7 +84,7 @@ class Tablet :public Clon<Product,Laptop>
     friend class ConcreteFactory;
     private: Tablet(){};
 };
-class Desktop: public Clon<Product,Laptop>
+class Desktop: public Clon<Product,Desktop>
 {
     void set_components()
     {std::cout<<"Buscando componentes para una DESKTOP\n";}
