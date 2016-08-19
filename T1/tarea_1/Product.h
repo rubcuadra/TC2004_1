@@ -9,7 +9,18 @@
 #pragma once
 #include <iostream>
 
-using namespace std;
+template <class Base, class SubClase>
+class Clon : public Base
+{
+public:
+    using Base::Base;
+    
+    virtual Base* clonar()
+    {
+        return new SubClase(dynamic_cast<SubClase&>(*this));
+    }
+};
+
 class Product
 {
 public:
@@ -27,7 +38,8 @@ public:
         package_product();
     }
 };
-class Laptop : public Product
+
+class Laptop : public Clon<Product,Laptop>
 {
     void set_components()
     {std::cout<<"Buscando componentes para una LAPTOP\n";}
@@ -42,7 +54,7 @@ class Laptop : public Product
     friend class ConcreteFactory;
     private: Laptop(){};
 };
-class Netbook : public Product
+class Netbook : public Clon<Product,Laptop>
 {
     void set_components()
     {std::cout<<"Buscando componentes para una NETBOOK\n";}
@@ -57,7 +69,7 @@ class Netbook : public Product
     friend class ConcreteFactory;
     private: Netbook(){};
 };
-class Tablet : public Product
+class Tablet :public Clon<Product,Laptop>
 {
     void set_components()
     {std::cout<<"Buscando componentes para una TABLET\n";}
@@ -72,7 +84,7 @@ class Tablet : public Product
     friend class ConcreteFactory;
     private: Tablet(){};
 };
-class Desktop:public Product
+class Desktop: public Clon<Product,Laptop>
 {
     void set_components()
     {std::cout<<"Buscando componentes para una DESKTOP\n";}
