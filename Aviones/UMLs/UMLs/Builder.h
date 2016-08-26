@@ -43,7 +43,7 @@ class BuilderBoeing : public Builder
     }
     void buildMarca(){avion->setMarca("Boeing");}
     void buildSerie(){avion->setNumSerie(12312787);}
-    void buildModel(){avion->setModelo("787");}
+    void buildModelo(){avion->setModelo("787");}
 };
 
 class Director
