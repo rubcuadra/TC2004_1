@@ -19,11 +19,6 @@ private:
     int index;
     int size;
 
-    void add(T e)
-    {
-        ++index;
-        list[index]=e;
-    }
     int find(T e)            //Regresa el index
     {
         return -1;
@@ -36,28 +31,20 @@ private:
     
     T* get(int i)
     {
-        return (list+i);
+        return list+i;
     }
     int getSize() {return size;}
     
 public:
+    ~Aggregate(){delete [] list;}
     void addE(T e)
     {
-        if (index==size-1)
-        {
-            //NO SE AGREGO
-            return;
-        }
-        ++index;
-        list[index]=e;
+        if (index==size-1) return; //No se agrega
+        list[++index]=e;
     }
     
-    Aggregate(int _size)
-    {
-        size = _size;
-        index = -1;
-        list = new T[size];
-    }
+    Aggregate(int _size): index(-1), size(_size),list(new T[_size]){}
+    
     Iterator<T>* getIterator()
     {
         return new Iterator<T>(this);
@@ -70,6 +57,7 @@ class Iterator
 {
     
 private:
+    Iterator(){}
     Aggregate<T>* aggregate;
     int i;
     
@@ -86,8 +74,6 @@ public:
     {
         return aggregate->getSize() > i+1;
     }
-    
-    T* CurrentItem(){ return aggregate->get(i);}
     
     Iterator(Aggregate<T> *a)
     {
