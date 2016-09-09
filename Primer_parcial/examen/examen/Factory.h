@@ -11,6 +11,7 @@
 class Factory
 {
 public:
+    
     virtual Pastel* factoryMethod(int)=0;
     
     Pastel* createPastel(int tipo)
@@ -23,6 +24,11 @@ public:
 
 class DF_Factory : public Factory
 {
+    void printIngrediente()
+    {
+        std::cout<<"Chocolate, frutas, merengue";
+    }
+    
     Pastel* factoryMethod(int tipo)
     {
         switch (tipo)
@@ -50,6 +56,10 @@ class DF_Factory : public Factory
 
 class Aguascalientes_Factory : public Factory
 {
+    void printIngrediente()
+    {
+        std::cout<<"Leche, Huevo, Mantequilla";
+    }
     Pastel* factoryMethod(int tipo)
     {
         switch (tipo)
