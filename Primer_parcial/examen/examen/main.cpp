@@ -16,6 +16,9 @@ int main(int argc, const char * argv[]) {
     //Selecciona Fabrica -> 1 Fabrica por ciudad, puede tener muchas sucursales
     DF_Factory *f = DF_Factory::GetInstance();  //(1 -> Sacher 2 -> Imp)
     Aguascalientes_Factory *a = Aguascalientes_Factory::GetInstance();
+    //Ingredientes
+    f->printIngrediente();
+    a->printIngrediente();
     //Listas con iteradores
     Sucursal *aguascalientes_centro = new Sucursal();
     Sucursal *DF_SantaFe = new Sucursal();

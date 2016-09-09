@@ -24,10 +24,6 @@ public:
 
 class DF_Factory : public Factory
 {
-    void printIngrediente()
-    {
-        std::cout<<"Chocolate, frutas, merengue";
-    }
     
     Pastel* factoryMethod(int tipo)
     {
@@ -42,6 +38,10 @@ class DF_Factory : public Factory
         }
     }
     public:
+    void printIngrediente()
+    {
+        std::cout<<"Chocolate, frutas, merengue";
+    }
         static DF_Factory* GetInstance()
         {
             static DF_Factory* instance = new DF_Factory;
@@ -56,10 +56,6 @@ class DF_Factory : public Factory
 
 class Aguascalientes_Factory : public Factory
 {
-    void printIngrediente()
-    {
-        std::cout<<"Leche, Huevo, Mantequilla";
-    }
     Pastel* factoryMethod(int tipo)
     {
         switch (tipo)
@@ -71,6 +67,11 @@ class Aguascalientes_Factory : public Factory
         }
     }
 public:
+    void printIngrediente()
+    {
+        std::cout<<"Leche, Huevo, Mantequilla";
+    }
+
     static Aguascalientes_Factory* GetInstance()
     {
         static Aguascalientes_Factory* instance = new Aguascalientes_Factory;
