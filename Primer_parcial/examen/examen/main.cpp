@@ -27,6 +27,7 @@ int main(int argc, const char * argv[]) {
     aguascalientes_centro->addCake("Tres leches", a->createPastel(1));
     //Iteramos
     aguascalientes_centro->printCakes("Tres leches");
+    aguascalientes_centro->getTotalCakes("Tres leches"); //Nuestro Search
     
     return 0;
 }
