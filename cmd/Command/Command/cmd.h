@@ -11,20 +11,20 @@
 #include <iostream>
 #include <string>
 
-template <class T, class Func>
+template<class T>
 class Command
 {
 public:
-    virtual T execute(T* , int, Func)=0;
+    virtual T execute(T*, int) = 0;
 };
 
-template <class T, class Func>
-class Sum: public Command<T,Func>
+template<class T>
+class Sum : public Command<T>
 {
-    T execute(T* arr, int size, Func f)
+    T execute(T* arr, int size)
     {
-        T acum = 0;
-        for (int i = 0; i<size; ++i)
+        T  acum = 0;
+        for (int i = 0; i < size; i++)
         {
             acum += arr[i];
         }
@@ -32,21 +32,24 @@ class Sum: public Command<T,Func>
     }
 };
 
-template <class T,class Func>
+template <class T>
 class Operaciones
 {
-    std::map<std::string,Command<T,Func>*> operaciones;
+    std::map<std::string,Command<T>*> operaciones;
 public:
     Operaciones()
+    {}
+    
+    void insert(std::string s, Command<T>* func)
     {
-        operaciones.insert( std::make_pair("suma",new Sum<T,Func>()));
+        operaciones.insert(make_pair(s, func));
     }
     
-    Command<T,Func>* getOp(std::string op)
+    Command<T>* getOp(std::string op)
     {
-        typename std::map<std::string,Command<T,Func>*>::iterator it = operaciones.find(op);
+        typename std::map<std::string,Command<T>*>::iterator it = operaciones.find(op);
         
-        if (operaciones.find(op)!=operaciones.end())
+        if (it!=operaciones.end())
         {
             return it->second;
         }
