@@ -6,83 +6,59 @@
 //  Copyright © 2016 Cuadra. All rights reserved.
 //
 
-#include <iostream>
+#include<iostream>
 
-using namespace std;
-
-class ArrayInts;
+class ArrayPositiveInts;
 
 class Proxy
 {
 private:
-    ArrayInts& arr;
-    int index;
+    ArrayPositiveInts& arr;
+    int idx;
+    
 public:
-    friend class ArrayInts;
-    Proxy(ArrayInts& arr, int index) : arr(arr), index(index){}
+    Proxy(ArrayPositiveInts& arr, int idx)
+    : arr(arr), idx(idx){}
     
-    Proxy& operator = (int value);
-    
-    friend ostream& operator << (ostream& op, Proxy& yo);
+    Proxy& operator=(int value);
 };
 
-class ArrayInts
+class ArrayPositiveInts
 {
 private:
-    int *list;
+    int* values;
     int size;
 public:
     friend class Proxy;
-    ArrayInts()
+    ArrayPositiveInts()
     {
         size = 100;
-        list = new int[size];
+        values = new int[size];
     }
-    Proxy operator[](int index)
+    int& operator[](int idx) //se devuelve un elemento del arreglo por referencia
     {
-        if(index >= 0)
-        {
-            return Proxy(*this, index);
-        }
-        else
-        {
-            cout << "No se aceptan numeros negativos en el inciso" << endl;
-            return Proxy(*this, index);
-        }
-    }
-    int getList(int index)
-    {
-        return *(list+index);
+        Proxy temp(*this, idx); //ejecuto el proxy
+        return values[idx];  //devuelvo el elemento
     }
 };
 
 Proxy& Proxy::operator=(int value)
 {
+    if(value>=0)
     {
-        if (value >= 0)
-        {
-            //arr[index] = value;
-            *(arr.list + index) = value;
-            return *this;
-        }
-        else
-        {
-            cout << "Error, tu numero tiene que ser positivo" <<endl;
-            return *this;
-        }
+        *(arr.values + idx) = value;
+        return *this;
     }
-};
-
-ostream& operator << (ostream& op, Proxy& yo)
-{
-    op << yo.arr.getList(yo.index);
-    return op;
-};
+    else
+    {
+        std::cout << "error" << std::endl;
+        return *this;
+    }
+}
 
 int main()
 {
-    ArrayInts list;
-    list[0] = 10;
-    list[1] = -10;
-    list[-3] = 15;
+    ArrayPositiveInts a;
+    a[0]=1;
+    std::cout << a[0];
 }
