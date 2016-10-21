@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <vector>
 #include "models.h"
 
 int main(int argc, const char * argv[])
@@ -33,26 +34,23 @@ int main(int argc, const char * argv[])
             return 1;
     }
     
-    MVS *m = new MVS();
-    CNN *cnn = new CNN();
-    Azteca *az = new Azteca();
-    Televisa* tv = new Televisa();
-    Formula *fm = new Formula();
+    vector<Noticiero*> nt;
+    nt.push_back( new MVS() );
+    nt.push_back( new CNN() );
+    nt.push_back( new Azteca() );
+    nt.push_back( new Televisa() );
+    nt.push_back( new Formula() );
     
     while (flag==0)
     {
         std::cout<<"Cual es la noticia?";
-        std::cin>>_note;
+        std::cin >>_note;
         
-        m->addNew(*current,_note);
-        cnn->addNew(*current,_note);
-        az->addNew(*current,_note);
-        tv->addNew(*current,_note);
-        fm->addNew(*current,_note);
+        for ( auto &i : nt ) //Iterador de c++11
+            i->addNew(*current,_note);
         
         std::cout<<"Hay mas noticias?\n0.- SI \n1.- NO\n";
         std:cin>>flag;
     }
     return 0;
-    
 }
