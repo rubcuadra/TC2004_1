@@ -14,7 +14,7 @@ int main(int argc, const char * argv[])
 {
     int user = 0; int flag = 0;
     std::string _note;
-    std::cout<<"Que usuario posteara?\n 1 .- P.Nieto \n 2 .-Hilary\n 3 .- Trump\n";
+    std::cout<<"Que usuario posteara?\n 1 .- P.Nieto \n 2 .- Hilary\n 3 .- Trump\n";
     std::cin>>user;
     
     Person *current = nullptr;
