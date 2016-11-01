@@ -8,6 +8,7 @@
 
 #pragma once
 #include <map>
+#include <set>
 
 class NameResolutionRequest
 {
@@ -31,20 +32,27 @@ public:
 class DomainNameServer
 {
 protected:
-    std::string extension; //Deberia ser un array?
     DomainNameServer* succesor;
-    
-    DomainNameServer(std::string x):extension(x){}
+    std::string serverName;
     std::map<std::string,std::string> name_ip_relation;
-    
+    std::set<std::string> known_extensions;
+    DomainNameServer(std::string sName):serverName(sName){}
+
     virtual void loadDomainsIps()=0; //Wut?
 
 public:
     void setSuccessor(DomainNameServer *sc){succesor = sc;}
     
-    void addDomainIP(std::string domain_name_without_extension,std::string ip)
+    bool inKnownExtensions(std::string extens)
     {
-        name_ip_relation.insert(make_pair(domain_name_without_extension,ip));
+        return known_extensions.find(extens) != known_extensions.end();
+    };
+    
+    void addDomainIP(std::string domain_name_without_extension,std::string extens,std::string ip)
+    {
+        
+        if (!inKnownExtensions(extens)) known_extensions.insert(extens);
+        name_ip_relation.insert(make_pair(domain_name_without_extension+"."+extens,ip));
     }
     
     std::string getIP(std::string domain_name)
@@ -61,11 +69,10 @@ public:
     
     void processRequest(NameResolutionRequest *request)
     {
-        //Este servidor debe conocer todos los que tienen esa extension
-        if (request->getExtension() == extension)
+        if ( inKnownExtensions(request->getExtension()) )
         {
-            std::cout<<"Buscando en el servidor dedicado a las extensiones: "<<extension<<"\n";
-            std::string ip = getIP(request->getDomainName());
+            std::cout<<"Buscando en "<<serverName<<"\n";
+            std::string ip = getIP(  request->getFullName()  );
             
             if (ip!="")
             {
@@ -73,7 +80,10 @@ public:
             }
             else
             {
-                std::cout<<"La IP ligada al dominio: "<<request->getFullName()<<" no se encontro\n";
+                if (succesor != nullptr) //Significa que teniamos la extension pero no el dominio
+                    succesor->processRequest(request); //Que otro intente
+                else
+                    std::cout<<"La IP ligada al dominio: "<<request->getFullName()<<" no se encontro\n";
             }
         }
         else if (succesor != nullptr) //Se lo rolamos al que sigue a ver si lo conoce
@@ -90,22 +100,25 @@ public:
 class MXServer : public DomainNameServer
 {
 public:
-    MXServer():DomainNameServer("mx"){ loadDomainsIps(); }
+    MXServer():DomainNameServer("Server mexicano"){ loadDomainsIps(); }
 protected:
     void loadDomainsIps()
     {
-        addDomainIP("hola","192.168.1.34");
+        addDomainIP("hola","mx","192.168.1.34");
+        addDomainIP("hola","com","192.168.1.35");
+        addDomainIP("hola","ru","192.168.1.35");
     }
 };
 
 class USServer : public DomainNameServer
 {
 public:
-    USServer():DomainNameServer("us"){ loadDomainsIps(); }
+    USServer():DomainNameServer("Server Gringo"){ loadDomainsIps(); }
 protected:
     void loadDomainsIps()
     {
-        addDomainIP("hola","192.168.1.39");
+        addDomainIP("hola","us","192.168.1.39");
+        addDomainIP("adios","ru","192.168.1.39");
     }
     
 };

@@ -19,7 +19,7 @@ int main(int argc, const char * argv[])
     
     NameResolutionRequest *current;
     
-    std::string to_resolve_name = "hola";
+    std::string to_resolve_name = "adios";
     std::string to_resolve_extension = "ru";
     
     current = new NameResolutionRequest(to_resolve_name,to_resolve_extension);
